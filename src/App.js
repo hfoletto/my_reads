@@ -40,7 +40,7 @@ class BooksApp extends React.Component {
         ) : (
           <div className="list-books">
             <div className="list-books-title">
-              <h1>MyReads 0.1</h1>
+              <h1>MyReads 0.2</h1>
             </div>
             <div className="list-books-content">
               <div>
