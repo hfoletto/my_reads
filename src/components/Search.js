@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import { Link } from 'react-router-dom'
 // import PropTypes from 'prop-types'
 import { search } from '../utils/BooksAPI'
-import Shelf from '../containers/Shelf'
+import Shelf from './Shelf'
 
 class Search extends Component {
   static propTypes = {}
@@ -19,8 +19,8 @@ class Search extends Component {
       console.log(searchTerms)
       if (searchTerms)
         search(searchTerms).then(data => {
-          console.log(data);
-          this.setState({fetchBooks: data})
+          console.log(data)
+          if (!data.error) this.setState({fetchBooks: data})
         })
     }, 500)
     this.setState({searchTimeout})

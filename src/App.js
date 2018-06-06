@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Link } from 'react-router-dom'
 import './App.css'
-import Shelf from './containers/Shelf'
+import Shelf from './components/Shelf'
 import Search from './components/Search'
 
 
