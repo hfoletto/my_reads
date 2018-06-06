@@ -5,19 +5,17 @@
     "es6": true,
     "node": true
   },
-
   "parser": "babel-eslint",
-
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
     },
     "sourceType": "module"
   },
-
   "rules": {
     "semi": ["error", "never"],
     "max-len": ["warn", { "code": 120 }],
+    "quotes": ["warn", "single"],
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
     "no-const-assign": "warn",
@@ -28,6 +26,5 @@
     "constructor-super": "warn",
     "valid-typeof": "warn"
   },
-
   "plugins": ["react"]
 }

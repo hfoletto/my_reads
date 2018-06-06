@@ -3,9 +3,8 @@ import PropTypes from 'prop-types'
 
 class Book extends Component {
   static propTypes = {
-    title: PropTypes.string.isRequired,
-    author: PropTypes.string.isRequired,
-    img: PropTypes.string.isRequired
+    book: PropTypes.object.isRequired,
+    shelfName: PropTypes.string
   }
 
   state = {}
@@ -18,10 +17,13 @@ class Book extends Component {
             <div className="book-cover" style={{
               width: 128,
               height: 193,
-              backgroundImage: 'url("'+this.props.img+'")'
+              backgroundImage: 'url("'+this.props.book.imageLinks.thumbnail+'")'
             }}></div>
             <div className="book-shelf-changer">
-              <select>
+              <select
+                onChange={e => this.props.moveBook(this.props.book.title, this.props.shelfName, e.target.value)}
+                value={this.props.shelfName}
+              >
                 <option value="none" disabled>Move to...</option>
                 <option value="currentlyReading">Currently Reading</option>
                 <option value="wantToRead">Want to Read</option>
@@ -30,8 +32,11 @@ class Book extends Component {
               </select>
             </div>
           </div>
-          <div className="book-title">{this.props.title}</div>
-          <div className="book-authors">{this.props.author}</div>
+          <div className="book-title">{this.props.book.title}</div>
+          <div className="book-authors">{
+            (typeof this.props.book.authors !== 'undefined' && this.props.book.authors.length > 0) &&
+              this.props.book.authors.join(', ')
+          }</div>
         </div>
       </li>
     )
