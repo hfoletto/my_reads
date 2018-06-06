@@ -45,7 +45,7 @@ class Search extends Component {
             <Shelf title="Results"
                    books={this.state.fetchBooks}
                    name="none"
-                   moveBook={this.moveBook}
+                   moveBook={this.props.addBook}
             />
           )}
         </div>
