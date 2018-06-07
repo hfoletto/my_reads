@@ -140,7 +140,8 @@ body, .app {
   align-items: flex-end;
 }
 
-.book-shelf-changer {
+.book-shelf-changer,
+.book-shelf-adder {
   position: absolute;
   right: 0;
   bottom: -10px;
@@ -148,13 +149,19 @@ body, .app {
   height: 40px;
   border-radius: 50%;
   background: #60ac5d;
-  background-image: url('./icons/arrow-drop-down.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: 20px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
-.book-shelf-changer select {
+.book-shelf-changer {
+  background-image: url('./icons/arrow-drop-down.svg');
+}
+.book-shelf-adder {
+  background-image: url('./icons/add.svg');
+}
+.book-shelf-changer select,
+.book-shelf-adder select {
   width: 100%;
   height: 100%;
   opacity: 0;

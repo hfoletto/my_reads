@@ -1,31 +1,20 @@
-import React, {Component} from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-// import PropTypes from 'prop-types'
-import { search } from '../utils/BooksAPI'
 import Shelf from './Shelf'
 
-class Search extends Component {
-  static propTypes = {}
-
-  state = {
-    searchTimeout: false,
-    fetchBooks: null
+class Search extends React.Component {
+  static propTypes ={
+    moveBook: PropTypes.func.isRequired,
+    fetchBooks: PropTypes.func.isRequired,
+    books: PropTypes.array.isRequired,
+    clearSearch: PropTypes.func.isRequired
   }
 
-  searchBooks(e) {
-    const searchTerms = e.target.value
-    clearTimeout(this.state.searchTimeout)
-    let searchTimeout = setTimeout(() => {
-      console.log(searchTerms)
-      if (searchTerms)
-        search(searchTerms).then(data => {
-          console.log(data)
-          if (!data.error) this.setState({fetchBooks: data})
-        })
-    }, 500)
-    this.setState({searchTimeout})
+  // Limpando a busca para realizar nova
+  componentWillMount() {
+    this.props.clearSearch()
   }
-
 
   render() {
     return (
@@ -34,18 +23,17 @@ class Search extends Component {
           <Link to="/" className="close-search">Close</Link>
           <div className="search-books-input-wrapper">
             <input type="text" placeholder="Search by title or author"
-              onChange={this.searchBooks.bind(this)}
+                   onChange={this.props.fetchBooks}
             />
           </div>
         </div>
         <div className="search-books-results">
-          {!this.state.fetchBooks ? (
+          {this.props.books.length < 1 ? (
             <div>Carregando Irmão</div>
           ) : (
             <Shelf title="Results"
-                   books={this.state.fetchBooks}
-                   name="none"
-                   moveBook={this.props.addBook}
+                   books={this.props.books}
+                   moveBook={this.props.moveBook}
             />
           )}
         </div>

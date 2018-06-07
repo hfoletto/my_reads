@@ -1,34 +1,28 @@
-import React, {Component} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import Book from './Book'
 
-class Shelf extends Component {
-  static propTypes = {
-    title: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    books: PropTypes.array.isRequired
-  }
+const Shelf = props => (
+  <div className="bookshelf">
+    <h2 className="bookshelf-title">{props.title}</h2>
+    <div className="bookshelf-books">
+      <ol className="books-grid">
+        {props.books.map((book, index) => (
+          <Book key={index}
+                book={book}
+                shelfIn={book.shelf ? book.shelf : 'none'}
+                moveBook={props.moveBook}
+          />
+        ))}
+      </ol>
+    </div>
+  </div>
+)
 
-  state = {}
-
-  render() {
-    return (
-      <div className="bookshelf">
-        <h2 className="bookshelf-title">{this.props.title}</h2>
-        <div className="bookshelf-books">
-          <ol className="books-grid">
-            {this.props.books.map((book, index) => (
-              <Book key={index}
-                    book={book}
-                    shelfName={this.props.name}
-                    moveBook={this.props.moveBook}
-              />
-            ))}
-          </ol>
-        </div>
-      </div>
-    )
-  }
+Shelf.propTypes = {
+  title: PropTypes.string.isRequired,
+  books: PropTypes.array.isRequired,
+  moveBook: PropTypes.func.isRequired
 }
 
 export default Shelf
