@@ -14,7 +14,7 @@
   },
   "rules": {
     "semi": ["error", "never"],
-    "max-len": ["warn", { "code": 120 }],
+    "max-len": ["warn", { "code": 80 }],
     "quotes": ["warn", "single"],
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",

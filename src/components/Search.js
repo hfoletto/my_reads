@@ -8,7 +8,8 @@ class Search extends React.Component {
     moveBook: PropTypes.func.isRequired,
     fetchBooks: PropTypes.func.isRequired,
     books: PropTypes.array.isRequired,
-    clearSearch: PropTypes.func.isRequired
+    clearSearch: PropTypes.func.isRequired,
+    searchTerms: PropTypes.array.isRequired
   }
 
   // Limpando a busca para realizar nova
@@ -27,16 +28,22 @@ class Search extends React.Component {
             />
           </div>
         </div>
-        <div className="search-books-results">
-          {this.props.books.length < 1 ? (
-            <div>Carregando Irmão</div>
-          ) : (
+        {this.props.books.length >= 1 ? (
+          <div className="search-books-results">
             <Shelf title="Results"
                    books={this.props.books}
                    moveBook={this.props.moveBook}
             />
-          )}
-        </div>
+          </div>
+        ) : (
+          <div className="search-terms">
+            <h2>Search Terms</h2>
+            <p>The search will only work with the following terms:</p>
+            <ul>{this.props.searchTerms.map(term => (
+              <li><span>{term}</span></li>
+            ))}</ul>
+          </div>
+        )}
       </div>
     )
   }
