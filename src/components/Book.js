@@ -5,7 +5,7 @@ const Book = props => (
   <li>
     <div className={['book', !props.book.title && 'placeholder'].join(' ')}>
       <div className="book-top">
-        <div className="book-cover" style={props.book.title && {
+        <div className="book-cover" style={props.book.imageLinks && {
           backgroundImage: 'url("'+props.book.imageLinks.thumbnail+'")'
         }}></div>
         <div className={props.shelfIn === 'none' ?

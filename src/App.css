@@ -79,7 +79,6 @@ body, .app {
 /* search page */
 
 .search-books-bar {
-  position: fixed;
   width: 100%;
   top: 0;
   left: 0;
@@ -114,7 +113,7 @@ body, .app {
 }
 
 .search-books-results {
-  padding: 80px 10px 20px;
+  padding: 24px 10px;
 }
 
 /* books grid */
@@ -201,7 +200,7 @@ body, .app {
 
 .search-terms {
   max-width: 898px;
-  margin: 53px auto 0;
+  margin: 0 auto;
   padding: 24px;
 }
 .search-terms ul {
@@ -218,6 +217,8 @@ body, .app {
   font-family: 'Roboto Mono', monospace;
   font-size: 17px;
   line-height: 28px;
+  color: #000;
+  opacity: 0.87;
 }
 .search-terms ul li:after {
   content: ", ";
@@ -226,15 +227,45 @@ body, .app {
   content: "";
 }
 .search-terms ul li span {
-  padding: 3px 6px;
-  border-radius: 2px;
-}
-.search-terms ul li.highlighted span {
   background: #FFF176;
   font-weight: bold;
+  opacity: 1;
 }
-.search-terms ul li.hidden span {
+.search-terms ul li.hidden {
   opacity: 0.38;
+}
+
+.search-error-message {
+  display: inline-block;
+  position: absolute;
+  top: 50px;
+  left: 24px;
+  padding: 12px 24px;
+  color: #fff;
+  background: #E53935;
+  border-radius: 4px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s linear 0.25s, opacity 0.25s linear;
+}
+.search-error-message.active {
+  visibility: visible;
+  opacity: 1;
+  transition-delay: 0s;
+}
+.search-error-message::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: -24px;
+  left: 48px;
+  width: 0;
+  height: 0;
+  border-top: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 12px solid #E53935;
+  border-left: 12px solid transparent;
 }
 
 

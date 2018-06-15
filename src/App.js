@@ -15,35 +15,15 @@ class BooksApp extends React.Component {
     this.updateBooks = this.updateBooks.bind(this)
     this.state = {
       books: [],
-      searchBooks: [],
-      searchTimeout: false,
-      loading: false,
-      searchTerms: [
-        'Android', 'Art', 'Artificial Intelligence', 'Astronomy', 'Austen',
-        'Baseball', 'Basketball', 'Bhagat', 'Biography', 'Brief', 'Business',
-        'Camus', 'Cervantes', 'Christie', 'Classics', 'Comics', 'Cook',
-        'Cricket', 'Cycling', 'Desai', 'Design', 'Development',
-        'Digital Marketing', 'Drama', 'Drawing', 'Dumas', 'Education',
-        'Everything', 'Fantasy', 'Film', 'Finance', 'First', 'Fitness',
-        'Football', 'Future', 'Games', 'Gandhi', 'Homer', 'Horror', 'Hugo',
-        'Ibsen', 'Journey', 'Kafka', 'King', 'Lahiri', 'Larsson', 'Learn',
-        'Literary Fiction', 'Make', 'Manage', 'Marquez', 'Money', 'Mystery',
-        'Negotiate', 'Painting', 'Philosophy', 'Photography', 'Poetry',
-        'Production', 'Programming', 'React', 'Redux', 'River', 'Robotics',
-        'Rowling', 'Satire', 'Science Fiction', 'Shakespeare', 'Singh',
-        'Swimming', 'Tale', 'Thrun', 'Time', 'Tolstoy', 'Travel', 'Ultimate',
-        'Virtual Reality', 'Web Development', 'iOS']
+      searchBooks: []
     }
   }
 
   // Carregamento inicial, obtendo os livros já salvos
   componentDidMount() {
-    this.setState({books: JSON.parse(localStorage.placeholderBooks)})
-    // this.setState({loading: true})
-    BooksAPI.getAll().then(data => this.setState({
-      books: data,
-      loading: false
-    }))
+    if (localStorage.placeholderBooks)
+      this.setState({books: JSON.parse(localStorage.placeholderBooks)})
+    BooksAPI.getAll().then(data => this.setState({books: data}))
   }
 
   // Método usado para adicionar ou mover livros entre prateleiras
@@ -64,6 +44,8 @@ class BooksApp extends React.Component {
     this.updateBooks()
   }
 
+  // Método usado para salvar a quantidade de livros em cada prateleira
+  // dessa forma podendo renderizar um placeholder enquanto carrega
   updateBooks() {
     const placeholderBooks = []
     this.state.books.forEach(el => {
@@ -73,26 +55,19 @@ class BooksApp extends React.Component {
   }
 
   // Método usado para buscar os livros no servidor com a BooksAPI
-  fetchBooks(e) {
-    const searchTerms = e.target.value
-    clearTimeout(this.state.searchTimeout)
-    let searchTimeout = setTimeout(() => {
-      console.log(searchTerms)
-      if (searchTerms) {
-        const placeholderSearchBooks = []
-        for(let i = 1; i <= 20; i++) {
-          placeholderSearchBooks.push({shelf: 'none'})
-        }
-        this.setState({searchBooks: placeholderSearchBooks})
-        search(searchTerms).then(data => {
-          console.log(data)
-          if (!data.error) this.setState({searchBooks: data})
-        })
-      }
-    }, 500)
-    this.setState({searchTimeout})
+  fetchBooks(searchTerm) {
+    const placeholderSearchBooks = []
+    for (let i = 1; i <= 20; i++) {
+      placeholderSearchBooks.push({shelf: 'none'})
+    }
+    this.setState({searchBooks: placeholderSearchBooks})
+    search(searchTerm).then(data => {
+      console.log(data)
+      if (!data.error) this.setState({searchBooks: data})
+    })
   }
 
+  // Limpa a busca anterior
   clearSearch() {
     this.setState({searchBooks: []})
   }
@@ -111,19 +86,16 @@ class BooksApp extends React.Component {
                        books={this.state.books.filter(book =>
                          book.shelf === 'currentlyReading')}
                        moveBook={this.moveBook}
-                       isLoading={this.state.loading}
                 />
                 <Shelf title="Want to Read"
                        books={this.state.books.filter(book =>
                          book.shelf === 'wantToRead')}
                        moveBook={this.moveBook}
-                       isLoading={this.state.loading}
                 />
                 <Shelf title="Read"
                        books={this.state.books.filter(book =>
                          book.shelf === 'read')}
                        moveBook={this.moveBook}
-                       isLoading={this.state.loading}
                 />
               </div>
             </div>
@@ -141,7 +113,6 @@ class BooksApp extends React.Component {
                     if (isInShelf) book.shelf = isInShelf.shelf
                     return book
                   })}
-                  searchTerms={this.state.searchTerms}
                   clearSearch={this.clearSearch}
           />
         } />
